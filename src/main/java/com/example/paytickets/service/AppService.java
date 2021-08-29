@@ -46,7 +46,7 @@ public class AppService {
             public void run() {
                 while(true){
                     try {
-                        String x = "1";
+
                         Long id = Long.valueOf(11);
 
                         if (routeInfoRepo.getPaymentStatus(id) == null || routeInfoRepo.getPaymentStatus(id).equals("NEW") || routeInfoRepo.getPaymentStatus(id).equals("PROCESSED") ) {
