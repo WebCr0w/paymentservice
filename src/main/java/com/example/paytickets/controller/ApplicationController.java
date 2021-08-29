@@ -33,7 +33,7 @@ public class ApplicationController {
     @GetMapping("/getstatus")
     public ResponseEntity<AppResponse> getStatus(@RequestParam Long id) throws IOException {
 
-        httpPayment.getStatus();
+
         return ResponseEntity.ok(appService.getStatus(id));
 
     }
