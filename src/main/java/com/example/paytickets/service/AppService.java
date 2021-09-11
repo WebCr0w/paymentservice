@@ -10,7 +10,9 @@ import com.example.paytickets.repository.RouteInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class AppService {
@@ -40,50 +42,7 @@ public class AppService {
         return new AppResponse<>(status);
     }
 
-    public void paymentService(){
-        Thread run = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    try {
-
-                        Long id = Long.valueOf(11);
-
-                        if (routeInfoRepo.getPaymentStatus(id) == null || routeInfoRepo.getPaymentStatus(id).equals("NEW") || routeInfoRepo.getPaymentStatus(id).equals("PROCESSED") ) {
-
-                            RouteInfoEntity statusUpdate = routeInfoRepo.getById(id);
-
-                            String getStatus = httpPayment.getStatus().getResult();
-                            statusUpdate.setPaymentStatus(PaymentStatus.valueOf(getStatus));
-                            routeInfoRepo.save(statusUpdate);
-                        } else id++;
 
 
 
-                        Thread.sleep(1000);
-
-                    } catch (InterruptedException | IOException ex){}
-                }
-            }
-        });
-        run.start();
-    }
-
-    public AppResponse setStatus(Long id) throws IOException {
-
-        if (routeInfoRepo.getPaymentStatus(id) == null || routeInfoRepo.getPaymentStatus(id).equals("NEW") || routeInfoRepo.getPaymentStatus(id).equals("PROCESSED") ) {
-
-            RouteInfoEntity statusUpdate = routeInfoRepo.getById(id);
-
-            String getStatus = httpPayment.getStatus().getResult();
-            statusUpdate.setPaymentStatus(PaymentStatus.valueOf(getStatus));
-            routeInfoRepo.save(statusUpdate);
-            String status = routeInfoRepo.getPaymentStatus(id);
-            return new AppResponse<>(status);
-        } else{
-
-            String status = routeInfoRepo.getPaymentStatus(id);
-            return new AppResponse<>(status);
-        }
-    }
 }

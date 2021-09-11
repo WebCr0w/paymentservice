@@ -6,6 +6,7 @@ import com.example.paytickets.dto.response.AppResponse;
 import com.example.paytickets.entity.PaymentStatus;
 import com.example.paytickets.http.HttpPayment;
 import com.example.paytickets.service.AppService;
+import com.example.paytickets.service.ScheduledTask;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,12 @@ public class ApplicationController {
 
     private final AppService appService;
     private final HttpPayment httpPayment;
+    private final ScheduledTask scheduledTask;
 
-    public ApplicationController(AppService appService, HttpPayment httpPayment) {
+    public ApplicationController(AppService appService, HttpPayment httpPayment, ScheduledTask scheduledTask) {
         this.appService = appService;
         this.httpPayment = httpPayment;
+        this.scheduledTask = scheduledTask;
     }
 
 
@@ -33,9 +36,7 @@ public class ApplicationController {
     @GetMapping("/getstatus")
     public ResponseEntity<AppResponse> getStatus(@RequestParam Long id) throws IOException {
 
-
         return ResponseEntity.ok(appService.getStatus(id));
-
     }
 
     @GetMapping("/randomstatus")
@@ -43,16 +44,7 @@ public class ApplicationController {
         return ResponseEntity.ok(new AppResponse<>(PaymentStatus.generateRandomStatus().toString()));
     }
 
-    @GetMapping("/setstatus")
-    public ResponseEntity setStatus(@RequestParam Long id) throws IOException {
 
 
-        return ResponseEntity.ok(appService.setStatus(id));
-    }
-    @PostMapping("/startpayment")
-    public ResponseEntity startPay(){
 
-        appService.paymentService();
-        return ResponseEntity.ok("ZBC");
-    }
 }

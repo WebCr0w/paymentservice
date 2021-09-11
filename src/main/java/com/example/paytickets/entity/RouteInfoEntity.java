@@ -17,6 +17,6 @@ public class RouteInfoEntity {
     private Date timeDeparture;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus = PaymentStatus.PROCESSED;
+    private PaymentStatus paymentStatus;
 
 }
